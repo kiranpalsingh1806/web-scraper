@@ -5,7 +5,8 @@ const express = require("express");
 
 const app = express()
 
-const url = "https://www.theguardian.com/world/india";
+// const url = "https://www.theguardian.com/world/india";
+const url = "https://www.imdb.com/list/ls054840033/";
 
 axios(url)
     .then(response => {
@@ -13,14 +14,16 @@ axios(url)
         const $ = cheerio.load(html);
         const articles = []
         var id = 0;
-        $(".fc-item__title", html).each(function () {
+        $(".lister-item-image", html).each(function () {
             id++;
-            const title = $(this).text()
-            const url = $(this).find('a').attr("href")
+            const name = $(this).find('img').attr("alt");
+            const about = $(this).find('a').attr("href")
+            const image = $(this).find('img').attr("src");
             articles.push({
                 id,
-                title,
-                url
+                name,
+                about,
+                image
             })
         })
 
